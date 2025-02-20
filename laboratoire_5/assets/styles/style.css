@@ -1,0 +1,336 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a0a0f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    overflow:scroll;
+}
+
+/* Enhanced lighting effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(82, 255, 168, 0.1) 0%,
+        rgba(0, 0, 0, 0) 50%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+}
+
+.bubble-1 {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(
+        135deg,
+        rgba(167, 139, 250, 0.2),
+        rgba(167, 139, 250, 0.05)
+    );
+    top: 10%;
+    left: 15%;
+    box-shadow: inset 0 0 20px rgba(167, 139, 250, 0.2);
+}
+
+.bubble-2 {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(
+        135deg,
+        rgba(82, 255, 168, 0.2),
+        rgba(82, 255, 168, 0.05)
+    );
+    bottom: 20%;
+    right: 15%;
+    box-shadow: inset 0 0 15px rgba(82, 255, 168, 0.2);
+}
+
+.bubble-3 {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 195, 255, 0.2),
+        rgba(0, 195, 255, 0.05)
+    );
+    bottom: 15%;
+    left: 25%;
+    box-shadow: inset 0 0 18px rgba(0, 195, 255, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.login-container {
+    background: linear-gradient( 
+    rgba(255, 255, 255, 0.197) 0%,
+    rgba(161, 168, 198, 0.114) 40%,
+    rgba(178, 183, 255, 0.077) 80%,
+    rgba(27, 36, 31, 0.445) 100%
+);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 3;
+    /* Enhanced 3D effect */
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.1),
+    inset 0 2px 2px rgba(255, 255, 255, 0.312);
+    transform: perspective(1000px) rotateX(2deg);
+}
+
+/* Top light effect */
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+}
+
+/* Side light effect */
+.login-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+}
+
+input, textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    /* Enhanced 3D effect for inputs */
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+    outline: none;
+    border-color: rgba(82, 255, 168, 0.5);
+    box-shadow: 
+        0 0 0 2px rgba(82, 255, 168, 0.2),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button{
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.189), 
+        rgba(0, 0, 0, 0.078)
+    );
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.632);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Enhanced 3D effect for button */
+    box-shadow: 
+        2px 5px 7px rgba(0, 0, 0, 0.259),
+        inset 0 2px 2px rgba(255, 255, 255, 0.312);
+}
+
+.button:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+        0 6px 20px rgba(82, 255, 168, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.error-container {
+    margin: 1rem;
+    padding: 1.5rem;
+    background: rgb(255, 89, 89);
+    border: rgb(182, 64, 64);
+    border-radius: 16px;
+    position: relative;
+    transform: perspective(1000px) rotateX(2deg);
+    box-shadow: 
+        0 4px 20px rgba(255, 89, 89, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 2px 2px rgba(255, 255, 255, 0.312);
+}
+
+/* Top light effect */
+.error-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+}
+
+.error-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin: 0;
+    line-height: 1.4;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.forum-container {
+    margin: 2em;
+
+    background: linear-gradient( 
+        rgba(255, 255, 255, 0.197) 0%,
+        rgba(161, 168, 198, 0.114) 40%,
+        rgba(178, 183, 255, 0.077) 80%,
+        rgba(27, 36, 31, 0.445) 100%
+    );
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    z-index: 3;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.1),
+        inset 0 2px 2px rgba(255, 255, 255, 0.312);
+    transform: perspective(1000px) rotateX(2deg);
+}
+
+.forum-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+}
+
+.forum-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.post {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: rgba(82, 255, 168, 0.9);
+}
+
+.post-content {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.post-meta {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.5rem;
+}
+
+.new-post-form {
+    margin-top: 1rem;
+}
+
+#quitter {
+    margin-top: 1em;
+    background-color: darkred;
+}
+
+#messages {
+    display: flex;
+    flex-direction: column-reverse;
+}
