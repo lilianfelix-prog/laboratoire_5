@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Prévient le routage des fichiers statiques comme les images, stylesheets et les scripts
+RewriteCond %{REQUEST_URI} !\.(png|jpg|webp|gif|jpeg|zip|css|svg|js|pdf)$ [NC]
+
+
+# Allow direct access to API files
+RewriteCond %{REQUEST_URI} !^/api/v1/ [NC]
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, DELETE, PUT"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
