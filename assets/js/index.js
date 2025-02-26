@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = resultatJSON.redirect; // redirige vers forum.html
             }
             if (resultatJSON.message === 'failure') {
-                $('body').append("<div class='error-container'> <h2 class='error-title'>Erreur</h2> <p class='error-message'>Mot de passe ou nom d'utilisateur incorrect</p> </div>");
+                $('body').append(" <div class='error-container'> <h2 class='error-title'>Erreur</h2> <p class='error-message'>Mot de passe ou nom d'utilisateur incorrect</p> </div> ");
             } 
             if (resultatJSON.error) {
                 console.log(resultatJSON.error + resultatJSON.details);
@@ -37,6 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }catch(error){
             console.error(error);
         }
+        
+    });
+
+    let inscription = document.getElementById('inscription');
+
+    inscription.addEventListener('click', () => {
+
+        window.location.href = 'inscription.html';
         
     });
 });

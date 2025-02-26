@@ -198,6 +198,7 @@ input:focus {
     border: rgb(182, 64, 64);
     border-radius: 16px;
     position: relative;
+    z-index: 3;
     transform: perspective(1000px) rotateX(2deg);
     box-shadow: 
         0 4px 20px rgba(255, 89, 89, 0.3),

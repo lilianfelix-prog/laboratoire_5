@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/styles/style.css" >
     <script src="./assets/js/index.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Connexion</title>
     
 </head>
@@ -15,14 +16,13 @@
 
         <div class="login-container">
             <form id="formulaire" method="POST">
-                <input type="text" name="username" placeholder="Entrez le nom d\'utilisateur" required value="">
+                <input type="text" name="username" placeholder="Entrez le nom d'utilisateur" required value="">
                 <input type="password" name="password" placeholder="Entrez le mot de passe" required value="">
-                 <input class="button" type="submit" value="Se connecter">
-                <input class="button" type="reset" value="Réinitialiser">
+                <input class="button" type="submit" value="Se connecter">
             </form>
-            <form method="POST">
-                <input name ="inscription" type="submit" class="button" value="Inscription">
-            </form>
+            <button class="button" id="reset" type="reset" value="Réinitialiser">Réinitialiser</button>
+            <button id="inscription" class="button" value="Inscription">Inscription</button>
+            
         </div>
 </body>
 </html>
