@@ -10,14 +10,13 @@
 
     <div class="forum-container">
         
-        <form class="new-post-form" method="POST">
+        <form class="new-post-form" id="formulaire" method="POST">
             <textarea placeholder="Message" name="message" rows="4" required></textarea>
             <input type="submit" class="button" value="Publier">
         </form>
 
-        <form method="POST">
-            <input id="quitter" name ="deconnexion" type="submit" class="button" value="Quitter">
-        </form>
+        <button id="quitter" name ="deconnexion" class="button">Quitter</button>
+
     </div>
     <div class="forum-container" id="messages">
         

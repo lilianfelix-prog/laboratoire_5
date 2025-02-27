@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //gerer la reponse, l'api retourne en json une reponse 'success' ou 'failure'
             if(resultatJSON.message === 'success'){
                 window.location.href = resultatJSON.redirect; // redirige vers forum.html
+                sessionStorage.setItem("user", resultatJSON.user);
             }
             if (resultatJSON.message === 'failure') {
                 $('body').append(" <div class='error-container'> <h2 class='error-title'>Erreur</h2> <p class='error-message'>Mot de passe ou nom d'utilisateur incorrect</p> </div> ");
@@ -47,4 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'inscription.html';
         
     });
+
+    let reset = document.getElementById('reset');
+
+    reset.addEventListener('click', () => {
+        formulaire.reset();
+    }); 
 });

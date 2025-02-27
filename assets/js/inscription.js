@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if(resultatJSON.message === 'success'){
                 window.location.href = resultatJSON.redirect; //redirige vers index.html
             }
-            //message d'erreur avec la list des erreurs pour le nouveau mot de passe
-            let erreurMsg = "<div class='error-container'> <h2 class='error-title'>Erreur</h2>";
+            
             if (resultatJSON.erreur) {
-                
+                //message d'erreur avec la list des erreurs pour le nouveau mot de passe
+            let erreurMsg = "<div class='error-container'> <h2 class='error-title'>Erreur</h2>";
                 resultatJSON.erreur.forEach(element => {
                     erreurMsg += `<p class='error-message'>${element}</p>`;
                 });
@@ -43,5 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }catch(error){
                 console.error(error)
             }
+    });
+
+    let quitter = document.getElementById('quitter');
+
+    quitter.addEventListener('click', () => {
+        window.location.href = 'index.html'; 
     });
 });

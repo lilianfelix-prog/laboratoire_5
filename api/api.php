@@ -7,10 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 require_once 'router.php';
-
 $router = new Router();
 
-$router->post('/api.php/connexion', function(){
+$pdo = require_once 'connexionDb.php';
+
+$router->post('/api.php/connexion', function() use ($pdo){
     
     // accede au donne json du form
     $data = file_get_contents('php://input');
@@ -24,24 +25,7 @@ $router->post('/api.php/connexion', function(){
         //Cas de tentative de connexion
         if (isset($username) && isset($password)) {
 
-            // Importer les paramètres de connexion
-            $config = require '../config.php';
-
             try {
-                
-                // Options de connexion
-                $options = [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,     
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC             
-                ];
-
-                // Instancier la connexion
-                $pdo = new PDO(
-                    "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
-                    $config['dbusername'],
-                    $config['dbpassword'],
-                    $options
-                );
                 
                 //Prendre l'utilisateur dans la base de donnée qui correspons avec le nom d'utilisateur mis dans le champs 
                 $requete = $pdo->prepare("SELECT * FROM usagers WHERE username = :username");
@@ -52,7 +36,7 @@ $router->post('/api.php/connexion', function(){
                 if($user && password_verify($password, $user['password'])){
                     //retourn en format json
                     header('Content-Type: application/json'); 
-                    echo json_encode(["message" => "success", "redirect" => "forum.html"]);
+                    echo json_encode(["message" => "success", "redirect" => "forum.html", "user" => $username]);
                     
                 //Affichage du message d'erreur
                 }else{
@@ -68,7 +52,7 @@ $router->post('/api.php/connexion', function(){
         }
 });
 
-$router->post('/api.php/inscription', function(){
+$router->post('/api.php/inscription', function() use ($pdo){
 
     // accede au donne json du form
     $data = file_get_contents('php://input');
@@ -81,24 +65,8 @@ $router->post('/api.php/inscription', function(){
 
     //Cas de tentative de connexion
     if (isset($username) && isset($password)) {
-        // Importer les paramètres de connexion
-        $config = require '../config.php';
 
         try {
-            
-            // Options de connexion
-            $options = [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,     
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC             
-            ];
-
-            // Instancier la connexion
-            $pdo = new PDO(
-                "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
-                $config['dbusername'],
-                $config['dbpassword'],
-                $options
-            );
             
             //Prend le nom d'utilisateur correspondant à celui mis par l'utilisateur de la base de donnée (s'il y en a un)
             $requete = $pdo->prepare("SELECT * FROM usagers WHERE username = :username");
@@ -158,6 +126,62 @@ $router->post('/api.php/inscription', function(){
         }
     }
 });
+
+$router->post('/api.php/message', function() use ($pdo){
+
+    // accede au donne json du form
+    $data = file_get_contents('php://input');
+    $userdata = json_decode($data, true);
+
+    // Nettoyer les données
+    $message = htmlspecialchars($userdata['message']);
+    $username = htmlspecialchars($userdata['user']);
+   
+
+    try {
+
+        //Ajout du message qui vient d'être envoyé à la base de données
+        if (isset($message)) { 
+            $requete = $pdo->prepare("SELECT * FROM usagers WHERE username = :username");
+            $requete->execute([':username' => $_SESSION["utilisateur"]]);
+            $user = $requete->fetch();
+            $insert_query = $pdo->prepare("INSERT INTO messages (date_soumission, message, user_id) VALUES (:date_soumission, :message, :user_id)");
+             $insert_query->execute([
+                 ':date_soumission' => date("Y/m/d"),
+                 ':message' => $message,
+                 ':user_id' => $user["user_id"]
+             ]);
+         }
+
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+
+     } catch (PDOException $e) {
+        header('Content-Type: application/json');
+        echo json_encode(["erreur_db" => "Database error", "details" => $e->getMessage()]);
+     }
+});
+
+$router->get('/api.php/messages', function() use ($pdo){
+    try{
+        //Requête avec PDO pour prendre tous les messages
+        $requete = $pdo->query("
+        SELECT messages.message, messages.user_id, usagers.username, messages.date_soumission 
+        FROM messages 
+        INNER JOIN usagers ON messages.user_id = usagers.user_id
+        ");
+        $user = $requete->fetchAll();
+
+        header('Content-Type: application/json');
+        echo json_encode($user);
+         
+    }catch(PDOException $e){
+        header('Content-Type: application/json');
+        echo json_encode(["erreur_db" => "Database error", "details" => $e->getMessage()]);
+    }
+
+});
+
 
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 
