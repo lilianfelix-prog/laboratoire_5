@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/styles/style.css" >
+    <script src="./assets/js/forum.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Forum</title>
 </head>
 <body>
 
     <div class="forum-container">
         
-        <form class="new-post-form" id="formulaire" method="POST">
-            <textarea placeholder="Message" name="message" rows="4" required></textarea>
+        <form class="new-post-form" id="formulaire" method="POST"> 
+            <textarea placeholder="Message" id="message" rows="4" required></textarea>   
             <input type="submit" class="button" value="Publier">
         </form>
-
+        
         <button id="quitter" name ="deconnexion" class="button">Quitter</button>
 
     </div>
     <div class="forum-container" id="messages">
-        
-        <h1>Messages:</h1>
+         <h1>Messages:</h1>
+       
     </div>
 </body>
 </html>

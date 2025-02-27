@@ -143,7 +143,7 @@ $router->post('/api.php/message', function() use ($pdo){
         //Ajout du message qui vient d'être envoyé à la base de données
         if (isset($message)) { 
             $requete = $pdo->prepare("SELECT * FROM usagers WHERE username = :username");
-            $requete->execute([':username' => $_SESSION["utilisateur"]]);
+            $requete->execute([':username' => $username]);
             $user = $requete->fetch();
             $insert_query = $pdo->prepare("INSERT INTO messages (date_soumission, message, user_id) VALUES (:date_soumission, :message, :user_id)");
              $insert_query->execute([
