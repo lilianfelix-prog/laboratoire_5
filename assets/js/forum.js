@@ -31,26 +31,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    //fonction pour ajouter les messages dans le forum
+    function ajouterMessages(messages) {
+        let fragment = document.createDocumentFragment();
+        
+        messages.forEach(message => {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            postDiv.innerHTML = `
+                <div class="post-title">${message.username}</div>
+                <div class="post-content">${message.message}</div>
+                <div class="post-meta">${message.date_soumission}</div>
+            `;
+            fragment.appendChild(postDiv);
+        });
+        document.getElementById('messages').appendChild(fragment);
+    }
+      
 
+    let displayedMessageIds = new Set();
+    //fonction pour fetch les messages du forum 
     async function fetchMessages(){
         const resultat = await fetch('http://localhost/laboratoire_5/api/api.php/messages');
         const resultatJSON = await resultat.json();
-        //console.log(resultatJSON); 
-        let posts = '';
-        resultatJSON.forEach(element => {
-            posts += `<div class='post'>
-            <div class="post-title">${element['username']}</div>
-            <div class="post-content">${element['message']}</div>
-            <div class="post-meta">${element['date_soumission']}</div>
-            </div>`;
-        });
-        $('#messages').html(posts);  //remplace le contenu de la div messages par les messages recus
+        //si le message n'est pas deja affiche on l'ajoute a la liste
+        const newMessages = resultatJSON.filter(msg => !displayedMessageIds.has(msg.message_id)); 
+        
+        if (newMessages.length > 0) {
+            
+            newMessages.forEach(msg => displayedMessageIds.add(msg.message_id));
+            ajouterMessages(newMessages);
+        }  
     }
+    setInterval(fetchMessages, 5000);
 
-    //appel la fonction fetchMessages() a chaque 5 secondes
-    let interval = setInterval(async () => {
-        await fetchMessages();
-    }, 5000);
+    
 
     let quitter = document.getElementById('quitter');
 

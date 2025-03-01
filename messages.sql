@@ -2,7 +2,7 @@ USE tch056_labo_forum;
 
 CREATE TABLE messages (
     message_id INT AUTO_INCREMENT PRIMARY KEY,
-    date_soumission DATE,
+    date_soumission TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     message VARCHAR(50),
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES usagers(user_id)

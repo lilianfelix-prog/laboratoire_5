@@ -145,9 +145,8 @@ $router->post('/api.php/message', function() use ($pdo){
             $requete = $pdo->prepare("SELECT * FROM usagers WHERE username = :username");
             $requete->execute([':username' => $username]);
             $user = $requete->fetch();
-            $insert_query = $pdo->prepare("INSERT INTO messages (date_soumission, message, user_id) VALUES (:date_soumission, :message, :user_id)");
-             $insert_query->execute([
-                 ':date_soumission' => date("Y/m/d"),
+            $insert_query = $pdo->prepare("INSERT INTO messages (date_soumission, message, user_id) VALUES (NOW(), :message, :user_id)");
+            $insert_query->execute([
                  ':message' => $message,
                  ':user_id' => $user["user_id"]
              ]);
@@ -166,9 +165,10 @@ $router->get('/api.php/messages', function() use ($pdo){
     try{
         //Requête avec PDO pour prendre tous les messages
         $requete = $pdo->query("
-        SELECT messages.message, messages.user_id, usagers.username, messages.date_soumission 
+        SELECT messages.message, messages.user_id, usagers.username, messages.date_soumission, messages.message_id
         FROM messages 
         INNER JOIN usagers ON messages.user_id = usagers.user_id
+        ORDER BY date_soumission ASC
         ");
         $user = $requete->fetchAll();
 
